@@ -1,5 +1,3 @@
-const utils = require('./utils'); 
+const notes = require('./notes');
 
-console.log(utils.name);
-
-console.log('2 + 5 =', utils.add(2, 3));
+console.log(notes.getNotes())
