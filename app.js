@@ -1,3 +1,3 @@
-const notes = require('./notes');
+const { getNotes } = require('./notes');
 
-console.log(notes.getNotes())
+console.log(getNotes())
