@@ -1,6 +1,6 @@
 const chalk = require('chalk');
 const yargs = require('yargs');
-const { getNotes } = require('./notes');
+const { getNotes, addNote, removeNote } = require('./notes');
 const fs = require('fs');
 
 // Customize yargs version
@@ -23,9 +23,7 @@ yargs.command({
     },
   },
   handler: (argv) => {
-    // fs.writeFileSync(`${argv.title}.txt`, argv.body);
-    console.log('Title:', argv.title);
-    console.log('Body:', argv.body);
+    addNote(argv.title, argv.body);
   }
 })
 
@@ -33,8 +31,15 @@ yargs.command({
 yargs.command({
   command: 'remove',
   describe: 'Remove an existing note',
-  handler: () => {
-    console.log('Removing note...');
+  builder: {
+    title: {
+      describe: 'Note title',
+      demandOption: true,
+      type: 'string',
+    }
+  },
+  handler: (argv) => {
+    removeNote(argv.title);
   }
 })
 
