@@ -1,13 +1,22 @@
 const fs = require('fs');
 const chalk = require('chalk');
 
-const getNotes = () => {
-  return "Your notes...";
+const listNotes = () => {
+  const notes = loadNotes();
+
+  if(notes.length > 0){
+    console.log(chalk.white.inverse('Your notes'))
+    notes.forEach(note => {
+      console.log(note.title);
+    })
+  } else {
+    console.log(chalk.red.inverse('Currently no notes...'));
+  } 
 }
 
 const addNote = (title, body) => {
   const notes = loadNotes();
-  const noteExists = notes.some(note => note.title === title)
+  const noteExists = notes.find(note => note.title === title)
 
   if(!noteExists){
     notes.push({
@@ -22,7 +31,7 @@ const addNote = (title, body) => {
     console.log(chalk.red.inverse(' Note with same title already exists. Use different title. '))
   }
 }
-const removeNote = (title) => {
+const removeNote = title => {
   const notes = loadNotes();
   const notesWithRemoved = notes.filter(note => note.title !== title)
 
@@ -34,7 +43,20 @@ const removeNote = (title) => {
   }
 }
 
-const saveNotes = (notes) => {
+const readNote = title => {
+  const notes = loadNotes();
+  const note = notes.find(note => note.title === title);
+
+  if(note){
+    console.log(chalk.bold.underline(note.title));
+    console.log(note.body);
+  } else {
+    console.log(chalk.red.inverse(' No note with that title exists. '))
+  }
+  
+}
+
+const saveNotes = notes => {
   const dataJSON = JSON.stringify(notes);
 
   fs.writeFileSync('notes.json', dataJSON);
@@ -52,7 +74,8 @@ const loadNotes = () => {
 }
 
 module.exports = {
-  getNotes,
+  listNotes,
   addNote,
   removeNote,
+  readNote,
 }
