@@ -1,7 +1,5 @@
-const chalk = require('chalk');
 const yargs = require('yargs');
 const { listNotes, addNote, removeNote, readNote } = require('./notes');
-const fs = require('fs');
 
 // Customize yargs version
 yargs.version('1.1.0');
